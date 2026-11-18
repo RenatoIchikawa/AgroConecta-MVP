@@ -1,4 +1,3 @@
-[readme_md.md](https://github.com/user-attachments/files/35057420/readme_md.md)
 # 🌱 AgroConecta — Plataforma Inteligente para Agricultura Familiar
 
 > **Eficiência energética, logística rural e assistência agronômica auditável para pequenos produtores, cooperativas e prefeituras.**
@@ -95,16 +94,6 @@ Nenhum servidor complexo ou instalação de dependências (`Node.js` ou `npm`) �
      ```
      Em seguida, acesse `http://localhost:8000` no navegador.
    * **Opção 3 (VS Code):** Clique com o botão direito em `index.html` e selecione **"Open with Live Server"**.
-
-### 🌐 Como Publicar Gratuitamente no GitHub Pages
-
-1. Suba os arquivos `index.html` e `README.md` para a branch `main` do seu repositório no GitHub.
-2. Acesse a aba **Settings** (Configurações) do repositório.
-3. No menu lateral esquerdo, clique em **Pages**.
-4. Em **Build and deployment > Branch**, selecione `main` e a pasta `/ (root)`, depois clique em **Save**.
-5. Em poucos instantes, o GitHub disponibilizará o link público da plataforma online.
-
----
 
 ## 📁 Estrutura de Arquivos
 
