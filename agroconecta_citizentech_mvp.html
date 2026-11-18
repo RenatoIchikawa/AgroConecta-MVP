@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroConecta — Eficiência Energética, Logística e IA para Agricultura Familiar</title>
+  <!-- Fontes Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    @keyframes scanline {
+      0% { transform: translateY(0%); opacity: 0.2; }
+      50% { opacity: 0.85; }
+      100% { transform: translateY(100%); opacity: 0.2; }
+    }
+    .animate-scan {
+      animation: scanline 2.4s ease-in-out infinite;
+    }
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-emerald-600 selection:text-white">
+
+  <!-- Notificação Toast Global -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-4 sm:px-0"></div>
+
+  <!-- ===================================================================== -->
+  <!-- BARRA DE NAVEGAÇÃO FIXA                                               -->
+  <!-- ===================================================================== -->
+  <header class="fixed top-0 inset-x-0 z-40 glass-nav border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        <!-- Marca -->
+        <a href="#problema" class="flex items-center gap-3 group focus:outline-none">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white shadow-md shadow-emerald-600/20 group-hover:scale-105 transition-transform">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900">Agro<span class="text-emerald-600">Conecta</span></span>
+              <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800">CitizenTech</span>
+            </div>
+            <p class="text-[11px] text-slate-500 hidden sm:block">Agricultura Familiar & Eficiência Rural</p>
+          </div>
+        </a>
+
+        <!-- Navegação Desktop -->
+        <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+          <a href="#problema" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-emerald-700 hover:bg-emerald-50/80 transition-colors">Problema</a>
+          <a href="#solucao" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-emerald-700 hover:bg-emerald-50/80 transition-colors">Solução</a>
+          <a href="#mvp" class="px-3 py-2 rounded-lg text-sm font-semibold text-emerald-700 bg-emerald-50/90 hover:bg-emerald-100/80 transition-colors">MVP ao Vivo</a>
+          <a href="#negocio" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-emerald-700 hover:bg-emerald-50/80 transition-colors">Modelo de Negócio</a>
+          <a href="#impacto" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-emerald-700 hover:bg-emerald-50/80 transition-colors">Impacto & ODS</a>
+          <a href="#viabilidade" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-emerald-700 hover:bg-emerald-50/80 transition-colors">Viabilidade</a>
+        </nav>
+
+        <!-- Botão Ação Rápida -->
+        <div class="flex items-center gap-2">
+          <a href="#mvp" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-slate-900 hover:bg-emerald-700 shadow-sm transition-all">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Usar Plataforma</span>
+          </a>
+          <button id="mobile-menu-btn" type="button" aria-label="Abrir menu" class="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-5 space-y-1 shadow-lg">
+      <a href="#problema" class="mobile-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-emerald-50">O Cidadão e o Problema</a>
+      <a href="#solucao" class="mobile-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-emerald-50">A Solução e Proposta de Valor</a>
+      <a href="#mvp" class="mobile-link block px-4 py-2.5 rounded-xl text-sm font-semibold text-emerald-700 bg-emerald-50">MVP em Uso Real</a>
+      <a href="#negocio" class="mobile-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-emerald-50">Modelo de Negócio B2B2C</a>
+      <a href="#impacto" class="mobile-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-emerald-50">Indicadores de Impacto & ODS</a>
+      <a href="#viabilidade" class="mobile-link block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-emerald-50">Viabilidade Financeira & Próximo Passo</a>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- 1) O CIDADÃO E O PROBLEMA                                             -->
+  <!-- ===================================================================== -->
+  <section id="problema" class="relative pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900 to-emerald-950 text-white">
+    <div class="absolute inset-0 opacity-15 pointer-events-none" style="background-image: radial-gradient(#10b981 1px, transparent 1px); background-size: 28px 28px;"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div class="lg:col-span-7 space-y-6">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">
+              <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
+              Cidadão: Pequeno Produtor da Agricultura Familiar
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-400/30">
+              ODS 2 & ODS 13
+            </span>
+          </div>
+
+          <h1 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.12]">
+            Quem produz <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">70% dos alimentos</span> do país ainda decide no escuro.
+          </h1>
+
+          <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
+            São <strong>3,9 milhões de estabelecimentos</strong> de agricultura familiar no Brasil enfrentando custos elevados de energia na irrigação, perdas logísticas no escoamento e venda abaixo do preço justo por falta de informação confiável no campo.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1">
+            <a href="#mvp" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-semibold text-slate-950 bg-emerald-400 hover:bg-emerald-300 shadow-lg shadow-emerald-500/25 transition-all">
+              <i data-lucide="activity" class="w-5 h-5"></i>
+              <span>Explorar Plataforma</span>
+            </a>
+            <a href="#solucao" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-semibold text-white bg-white/10 hover:bg-white/15 border border-white/15 transition-all">
+              <span>Conhecer a Solução</span>
+              <i data-lucide="arrow-down" class="w-4 h-4 text-emerald-400"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 space-y-3.5">
+          <div class="bg-slate-800/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-5 shadow-xl">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-400 flex items-center justify-center shrink-0 font-extrabold text-sm">
+                -35%
+              </div>
+              <div>
+                <h2 class="text-sm font-bold text-white">Perda Pós-Colheita e Margem Comercial</h2>
+                <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Até 35% da produção hortifrúti se perde ou é vendida a atravessadores por falta de cotações diárias (CEAGESP/CONAB) e frete consolidado (FAO / EMBRAPA).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-5 shadow-xl">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center shrink-0 font-extrabold text-sm">
+                +30%
+              </div>
+              <div>
+                <h2 class="text-sm font-bold text-white">Desperdício Energético na Irrigação</h2>
+                <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Bombeamento acionado sem leitura de umidade do solo e fora da tarifa horária rural reduzida (Resolução ANEEL nº 1.000/2021) eleva em até 30% a conta de luz.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/85 backdrop-blur-md border border-slate-700/80 rounded-2xl p-5 shadow-xl">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-xl bg-sky-500/15 border border-sky-500/30 text-sky-400 flex items-center justify-center shrink-0 font-extrabold text-sm">
+                79%
+              </div>
+              <div>
+                <h2 class="text-sm font-bold text-white">Sem Assistência Técnica Regular</h2>
+                <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Segundo o Censo Agropecuário (IBGE), 79% dos produtores não recebem orientação técnica contínua — e ferramentas genéricas de IA alucinam normas e dosagens.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- 2) A SOLUÇÃO E PROPOSTA DE VALOR                                      -->
+  <!-- ===================================================================== -->
+  <section id="solucao" class="py-16 sm:py-20 bg-white border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 mb-3">
+          A Solução & Proposta de Valor
+        </span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Do solo ao mercado: inteligência simples, auditável e conectada ao campo.
+        </h2>
+        <p class="text-slate-600 mt-3 text-sm sm:text-base leading-relaxed">
+          O <strong>AgroConecta</strong> reúne sensores físicos no talhão, automação de cotações públicas, pipeline de dados no Databricks e inteligência artificial auditada em normas oficiais para que o produtor economize energia, evite perdas e venda melhor.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/90 space-y-3">
+          <div class="w-11 h-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center">
+            <i data-lucide="zap" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900">1. Eficiência Energética & IoT</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Sensores físicos (ESP32) monitoram a umidade do solo e acionam a irrigação apenas quando necessário, aproveitando janelas de tarifa reduzida (ANEEL) e geração solar.
+          </p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/90 space-y-3">
+          <div class="w-11 h-11 rounded-xl bg-teal-600 text-white flex items-center justify-center">
+            <i data-lucide="truck" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900">2. Preço Justo & Logística Cooperativa</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Robôs RPA coletam diariamente cotações da CEAGESP e CONAB, enquanto o Databricks consolida cargas compartilhadas entre produtores vizinhos.
+          </p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/90 space-y-3">
+          <div class="w-11 h-11 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900">3. Assistência Técnica Sem Alucinação</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Diagnóstico foliar por Visão Computacional integrado a um consultor LLM local (RAG) que só responde com comprovação documental (EMBRAPA/ANEEL) e protege dados via LGPD.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 text-white rounded-2xl p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Arquitetura Unificada • Engenharia de Software</span>
+          <p class="text-sm font-semibold text-white">7 Componentes Integrados em Produção:</p>
+        </div>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-200">Maker Lab IoT (ESP32)</span>
+          <span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-200">Automação RPA</span>
+          <span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-200">Big Data Databricks</span>
+          <span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-200">GenAI RAG Local</span>
+          <span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-200">Visão Computacional</span>
+          <span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-200">Cloud & DevSecOps</span>
+          <span class="px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-semibold">BI & Modelo B2B2C</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- 3) PLATAFORMA OPERACIONAL EM USO REAL                                 -->
+  <!-- ===================================================================== -->
+  <section id="mvp" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 mb-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+          Plataforma Operacional
+        </span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Central de Operações AgroConecta
+        </h2>
+        <p class="text-slate-600 mt-2 max-w-2xl text-sm sm:text-base">
+          Telemetria de campo e cotações RPA/Databricks, consultor técnico auditável (RAG + LGPD) e diagnóstico foliar por visão computacional.
+        </p>
+      </div>
+      <button type="button" onclick="openLGPDModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:border-emerald-400 shadow-sm self-start md:self-auto">
+        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+        <span>LGPD & Segurança Ativas</span>
+      </button>
+    </div>
+
+    <!-- MÓDULO 1: TELEMETRIA IOT + COTAÇÕES RPA + DATABRICKS -->
+    <div class="space-y-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white text-xs font-bold flex items-center justify-center">1</span>
+          Telemetria IoT, Cotações RPA & Inteligência Logística
+        </h3>
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" onclick="simulateIoTScenario('optimal')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100">
+            Eco-Irrigação
+          </button>
+          <button type="button" onclick="simulateIoTScenario('dry')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100">
+            Solo Seco
+          </button>
+          <button type="button" onclick="simulateIoTScenario('solar')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200">
+            Geração Solar
+          </button>
+          <button id="btn-run-rpa" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-slate-900 hover:bg-emerald-700 transition-colors">
+            <i data-lucide="refresh-cw" id="rpa-icon" class="w-3.5 h-3.5"></i>
+            <span>Sincronizar RPA</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Cards Sensores IoT -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Umidade do Solo (ESP32)</span>
+            <span id="iot-soil-badge" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">Ideal</span>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <p id="iot-soil-val" class="text-3xl font-extrabold text-slate-900">68%</p>
+            <span class="text-xs text-slate-400 font-mono">Faixa: 60%–75%</span>
+          </div>
+          <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+            <div id="iot-soil-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 68%"></div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Bombeamento & Irrigação</span>
+            <span id="iot-energy-badge" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">-31% kWh</span>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <p id="iot-energy-val" class="text-3xl font-extrabold text-slate-900">1,4 kW</p>
+            <span class="text-xs text-slate-400 font-mono">Tarifa Rural ANEEL</span>
+          </div>
+          <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+            <div id="iot-energy-bar" class="bg-teal-500 h-full rounded-full transition-all duration-500" style="width: 42%"></div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Microclima Talhão</span>
+            <span id="iot-temp-badge" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">Estável</span>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <p id="iot-temp-val" class="text-3xl font-extrabold text-slate-900">24,5 °C</p>
+            <span class="text-xs text-slate-400 font-mono">Evapotranspiração Baixa</span>
+          </div>
+          <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+            <div id="iot-temp-bar" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 55%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cotações RPA + Databricks -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h4 class="text-base font-bold text-slate-900">Cotações Agrícolas Automatizadas (CEAGESP / CONAB)</h4>
+              <p class="text-xs text-slate-500 mt-0.5">Sincronização: <span id="rpa-timestamp" class="font-semibold text-slate-700">Hoje, 06:00</span></p>
+            </div>
+            <div class="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200/80 self-start">
+              <button type="button" onclick="filterRPATable('todos', this)" class="rpa-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm">Todos</button>
+              <button type="button" onclick="filterRPATable('Hortalicas', this)" class="rpa-filter-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600">Hortaliças</button>
+              <button type="button" onclick="filterRPATable('Raizes', this)" class="rpa-filter-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600">Raízes & Grãos</button>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                  <th class="py-3 px-4 sm:px-5">Cultura</th>
+                  <th class="py-3 px-4">Fonte</th>
+                  <th class="py-3 px-4">Preço</th>
+                  <th class="py-3 px-4">Var.</th>
+                  <th class="py-3 px-4 sm:px-5">Ação Logística</th>
+                </tr>
+              </thead>
+              <tbody id="rpa-table-body" class="divide-y divide-slate-100 text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm flex flex-col justify-between space-y-5">
+          <div class="space-y-4">
+            <div class="flex items-start justify-between gap-2 border-b border-slate-100 pb-4">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-teal-600">Databricks • Camada Gold</span>
+                <h4 class="text-base font-bold text-slate-900 mt-0.5">Consolidação Regional</h4>
+              </div>
+              <select id="region-selector" onchange="updateBigDataChart()" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-800">
+                <option value="cinturao">Cinturão Verde (SP)</option>
+                <option value="vale">Vale do Ribeira</option>
+                <option value="mantiqueira">Serra da Mantiqueira</option>
+              </select>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/70 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-semibold text-slate-700">Economia Energética (Irrigação)</span>
+                <span id="bd-energy-saving" class="font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">-29% kWh</span>
+              </div>
+              <div class="flex items-baseline justify-between text-xs text-slate-500">
+                <span>Tradicional: <strong id="bd-energy-trad" class="text-slate-700">410</strong> kWh</span>
+                <span>AgroConecta: <strong id="bd-energy-agro" class="text-emerald-700">291</strong> kWh</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                <div id="bd-energy-bar" class="bg-emerald-600 h-full rounded-full transition-all duration-500" style="width: 65%"></div>
+              </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/70 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-semibold text-slate-700">Ocupação de Frete Compartilhado</span>
+                <span id="bd-logistics-gain" class="font-bold text-teal-700 bg-teal-100 px-2 py-0.5 rounded-md">+38% Carga</span>
+              </div>
+              <div class="flex items-baseline justify-between text-xs text-slate-500">
+                <span>Isolado: <strong class="text-slate-700">54%</strong></span>
+                <span>Cooperativa: <strong id="bd-logistics-agro" class="text-teal-700">92%</strong></span>
+              </div>
+              <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                <div id="bd-logistics-bar" class="bg-teal-600 h-full rounded-full transition-all duration-500" style="width: 92%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-emerald-950 text-white rounded-xl p-4 space-y-1">
+            <p class="text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+              <i data-lucide="truck" class="w-4 h-4"></i> Rota Otimizada
+            </p>
+            <p id="bd-route-advice" class="text-xs text-slate-200 leading-relaxed">
+              Consolidação de carga disponível amanhã às 05h30 via Cooperativa Regional (Rota SP-270). Economia de R$ 240,00 em frete e -18 kg de CO₂.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÓDULO 2: ASSISTENTE TÉCNICO AGRÍCOLA (RAG OFICIAL + LGPD) -->
+    <div class="space-y-6 pt-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+          Consultor Técnico Auditável (RAG ANEEL & EMBRAPA + LGPD)
+        </h3>
+        <span class="text-xs font-semibold text-slate-500">87% acurácia • 100% bloqueio fora da base</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col overflow-hidden">
+          <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="book-open-check" class="w-5 h-5 text-emerald-400"></i>
+              <span class="text-sm font-bold">AgroConecta IA • Base Oficial Curada</span>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Llama 3.2 Local</span>
+          </div>
+
+          <div class="px-5 py-3 bg-slate-50 border-b border-slate-200/80 flex flex-wrap gap-2">
+            <button type="button" onclick="askRAGQuestion('Desconto na tarifa de energia para irrigação (ANEEL)')" class="text-xs bg-white hover:bg-emerald-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg transition-colors">
+              Desconto tarifa irrigação (ANEEL)
+            </button>
+            <button type="button" onclick="askRAGQuestion('Temperatura ideal para conservação do leite')" class="text-xs bg-white hover:bg-emerald-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg transition-colors">
+              Temperatura do leite (MAPA/EMBRAPA)
+            </button>
+            <button type="button" onclick="askRAGQuestion('Sou produtor CPF 123.456.789-00 tel (11) 98765-4321, como funciona o manejo hídrico?')" class="text-xs bg-white hover:bg-emerald-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg transition-colors">
+              Consulta com CPF + Telefone (LGPD)
+            </button>
+            <button type="button" onclick="askRAGQuestion('Qual a cotação do dólar hoje?')" class="text-xs bg-white hover:bg-amber-50 text-slate-600 border border-slate-200 px-3 py-1.5 rounded-lg transition-colors">
+              Consulta fora da base ("Não consta")
+            </button>
+          </div>
+
+          <div id="rag-chat-messages" class="p-5 space-y-4 h-72 overflow-y-auto bg-white">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5">
+                <i data-lucide="sprout" class="w-4 h-4"></i>
+              </div>
+              <div class="bg-slate-100 rounded-2xl rounded-tl-none p-4 text-sm text-slate-800 max-w-xl">
+                Olá! Pergunte sobre regras de tarifa rural da <strong>ANEEL</strong> ou manejo técnico da <strong>EMBRAPA</strong>. Se a informação não constar nas fontes oficiais, a resposta é bloqueada automaticamente.
+              </div>
+            </div>
+          </div>
+
+          <form id="rag-form" class="p-3.5 bg-slate-50 border-t border-slate-200 flex items-center gap-2">
+            <input id="rag-input" type="text" placeholder="Digite sua dúvida técnica..." class="flex-1 bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-emerald-500" required />
+            <button type="submit" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700">
+              <span>Consultar</span>
+              <i data-lucide="send" class="w-4 h-4"></i>
+            </button>
+          </form>
+        </div>
+
+        <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm flex flex-col justify-between space-y-4">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-600">Verificador de Fundamentação</span>
+                <h4 class="text-base font-bold text-slate-900">Auditoria em Tempo Real</h4>
+              </div>
+              <span id="rag-status-pill" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">Verificado</span>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80">
+              <div class="flex items-end justify-between mb-2">
+                <span class="text-xs font-semibold text-slate-600">Groundedness Score</span>
+                <span id="rag-score-value" class="text-2xl font-extrabold text-emerald-600">98,7%</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                <div id="rag-score-bar" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-full transition-all duration-500" style="width: 98.7%"></div>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-2">Limiar de aprovação: <strong>85,0%</strong>. Abaixo disso, retorna <em>"Não consta"</em>.</p>
+            </div>
+
+            <div id="rag-lgpd-banner" class="hidden bg-slate-900 text-white rounded-xl p-3.5 border border-emerald-500/40 flex items-start gap-2.5">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+              <div class="text-xs">
+                <p class="font-bold text-emerald-300">[LGPD] Dados Pessoais Redigidos</p>
+                <p id="rag-lgpd-details" class="text-slate-300 mt-0.5">Identificadores removidos antes da inferência.</p>
+              </div>
+            </div>
+
+            <div class="bg-emerald-50/70 border border-emerald-200 rounded-xl p-4 space-y-1">
+              <p id="rag-source-title" class="text-xs font-bold text-emerald-800">Resolução Normativa ANEEL nº 1.000/2021</p>
+              <p id="rag-source-excerpt" class="text-xs text-slate-700 leading-relaxed">
+                "A distribuidora deve conceder desconto na tarifa de energia elétrica aplicável ao consumo verificado no período reservado destinado à irrigação e aquicultura."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÓDULO 3: DIAGNÓSTICO FITOSSANITÁRIO POR VISÃO COMPUTACIONAL -->
+    <div class="space-y-6 pt-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white text-xs font-bold flex items-center justify-center">3</span>
+          Diagnóstico Fitossanitário por Visão Computacional
+        </h3>
+        <label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-slate-200 hover:border-emerald-400 text-slate-700 cursor-pointer shadow-sm self-start sm:self-auto">
+          <i data-lucide="upload" class="w-4 h-4 text-emerald-600"></i>
+          <span>Analisar Foto da Lavoura</span>
+          <input type="file" id="leaf-upload-input" accept="image/*" class="hidden" onchange="handleCustomLeafUpload(event)" />
+        </label>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <div class="lg:col-span-6 space-y-3">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <button type="button" onclick="selectLeafSample('requeima')" id="btn-sample-requeima" class="leaf-sample-btn px-3 py-2 rounded-xl text-xs font-bold border-2 border-emerald-600 bg-emerald-50 text-emerald-900">1. Requeima</button>
+            <button type="button" onclick="selectLeafSample('minadora')" id="btn-sample-minadora" class="leaf-sample-btn px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 bg-white text-slate-700">2. Minadora</button>
+            <button type="button" onclick="selectLeafSample('nitrogenio')" id="btn-sample-nitrogenio" class="leaf-sample-btn px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 bg-white text-slate-700">3. Clorose (N)</button>
+            <button type="button" onclick="selectLeafSample('saudavel')" id="btn-sample-saudavel" class="leaf-sample-btn px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 bg-white text-slate-700">4. Saudável</button>
+          </div>
+
+          <div class="relative bg-slate-900 rounded-2xl p-5 border border-slate-800 shadow-lg overflow-hidden">
+            <div class="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-scan pointer-events-none"></div>
+            <div class="flex items-center justify-between text-xs text-slate-300 mb-3">
+              <span class="font-mono flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> YOLOv8-AgroEdge</span>
+              <button type="button" id="toggle-bbox-btn" onclick="toggleBoundingBox()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 font-semibold border border-slate-700">
+                Ocultar Bounding Box
+              </button>
+            </div>
+            <div id="leaf-svg-container" class="w-full h-60 flex items-center justify-center bg-slate-950/70 rounded-xl border border-slate-800/90 overflow-hidden relative"></div>
+            <div class="flex items-center justify-between text-[11px] text-slate-400 mt-3 font-mono">
+              <span>Inferência Edge: 34ms (Offline-Ready)</span>
+              <span id="cv-confidence-hud" class="text-emerald-400 font-bold">Confiança: 96,8%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Diagnóstico Fitossanitário</span>
+              <h4 id="cv-title" class="text-xl font-extrabold text-slate-900 mt-0.5">Requeima (Phytophthora infestans)</h4>
+            </div>
+            <span id="cv-severity-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800">Severidade: Alta</span>
+          </div>
+
+          <p id="cv-symptoms" class="text-sm text-slate-700 leading-relaxed">
+            Manchas encharcadas de coloração verde-escura a marrom-acinzentada nas bordas dos folíolos, com halo clorótico característico de alta umidade foliar.
+          </p>
+
+          <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-4 space-y-1.5">
+            <h5 class="text-xs font-bold uppercase tracking-wider text-emerald-800">Manejo Recomendado (EMBRAPA)</h5>
+            <p id="cv-recommendation" class="text-sm text-slate-800 leading-relaxed">
+              Suspender irrigação por aspersão no período noturno, realizar poda sanitária das folhas afetadas e aplicar calda bordalesa conforme circular técnica da EMBRAPA.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/80">
+              <p class="text-[11px] font-semibold text-slate-500">Perda Evitada</p>
+              <p id="cv-impact" class="text-base font-extrabold text-emerald-700">Até 42% da safra</p>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/80">
+              <p class="text-[11px] font-semibold text-slate-500">Cultura</p>
+              <p id="cv-crop" class="text-base font-extrabold text-slate-900">Tomateiro / Batata</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- 4) MODELO DE NEGÓCIO E GO-TO-MARKET (B2B2C)                           -->
+  <!-- ===================================================================== -->
+  <section id="negocio" class="py-16 sm:py-24 bg-slate-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 mb-3">
+          Modelo de Negócio & Go-To-Market
+        </span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold tracking-tight">
+          Modelo B2B2C: quem paga, quem usa e como escalamos no campo.
+        </h2>
+        <p class="text-slate-300 mt-3 text-sm sm:text-base leading-relaxed">
+          Vender software individualmente para milhares de pequenos produtores pulverizados gera alto custo de aquisição. O <strong>AgroConecta</strong> monetiza via instituições que já organizam a cadeia rural.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="bg-slate-800/90 border border-emerald-500/40 rounded-2xl p-6 sm:p-7 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300">QUEM PAGA (B2B / B2G)</span>
+            <i data-lucide="building-2" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white">Cooperativas & Prefeituras</h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Assinatura SaaS institucional contratada por <strong>cooperativas agrícolas</strong> e <strong>Secretarias Municipais de Agricultura</strong> (programas PNAE e PAA), complementada por <em>take-rate</em> de 3% sobre fretes consolidados.
+          </p>
+          <ul class="space-y-2 text-xs text-slate-300 pt-2 border-t border-slate-700/80">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Reduz perdas pós-colheita dos cooperados</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Entrega rastreabilidade e dados ESG para editais</li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-6 sm:p-7 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-lg text-xs font-bold bg-teal-500/20 text-teal-300">QUEM USA (C • CIDADÃO)</span>
+            <i data-lucide="sprout" class="w-5 h-5 text-teal-400"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white">Pequeno Produtor Rural</h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Acesso <strong>100% gratuito na ponta</strong> para os produtores vinculados à cooperativa ou município parceiro, com interface simples via celular e alertas práticos de irrigação, pragas e preço justo.
+          </p>
+          <ul class="space-y-2 text-xs text-slate-300 pt-2 border-t border-slate-700/80">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-teal-400"></i> Barreira zero de adoção financeira</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-teal-400"></i> Funciona em baixa conectividade</li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-6 sm:p-7 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-300">COMO CHEGA (GO-TO-MARKET)</span>
+            <i data-lucide="map-pin" class="w-5 h-5 text-amber-400"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white">Expansão por Polos Regionais</h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Entrada pelo <strong>Cinturão Verde de São Paulo</strong> por meio de venda consultiva B2B junto a diretorias de cooperativas e convênios municipais de compras públicas da agricultura familiar.
+          </p>
+          <ul class="space-y-2 text-xs text-slate-300 pt-2 border-t border-slate-700/80">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> 1 contrato = 50 a 100 produtores ativados em lote</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> Onboarding apoiado pelos agrônomos locais</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- 5) INDICADORES DE NEGÓCIO, IMPACTO E ODS                              -->
+  <!-- ===================================================================== -->
+  <section id="impacto" class="py-16 sm:py-24 bg-white border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 mb-3">
+          Métricas & Agenda 2030 ONU
+        </span>
+        <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Indicadores de Negócio, Impacto no Cidadão e ODS
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="bg-slate-50 rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center">
+              <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-extrabold text-slate-900">Indicadores de Negócio (SaaS B2B2C)</h3>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-white rounded-xl p-4 border border-slate-200/80">
+              <p class="text-xs font-semibold text-slate-500">Ticket Médio Institucional</p>
+              <p class="text-2xl font-extrabold text-slate-900 mt-1">R$ 2.500<span class="text-xs font-normal text-slate-500">/mês</span></p>
+              <p class="text-[11px] text-slate-500 mt-1">Pacote até 100 produtores</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 border border-slate-200/80">
+              <p class="text-xs font-semibold text-slate-500">Margem Bruta Projetada</p>
+              <p class="text-2xl font-extrabold text-emerald-600 mt-1">78%</p>
+              <p class="text-[11px] text-slate-500 mt-1">Inferência local sem custo/token</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 border border-slate-200/80">
+              <p class="text-xs font-semibold text-slate-500">LTV / CAC Institucional</p>
+              <p class="text-2xl font-extrabold text-slate-900 mt-1">6,4x</p>
+              <p class="text-[11px] text-slate-500 mt-1">Aquisição em lote via cooperativa</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 border border-slate-200/80">
+              <p class="text-xs font-semibold text-slate-500">Receita Logística Extra</p>
+              <p class="text-2xl font-extrabold text-teal-600 mt-1">3%</p>
+              <p class="text-[11px] text-slate-500 mt-1">Take-rate sobre fretes consolidados</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-emerald-50/60 rounded-2xl border border-emerald-200 p-6 sm:p-8 space-y-5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center">
+              <i data-lucide="trending-up" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-extrabold text-slate-900">Indicadores de Impacto no Cidadão</h3>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-white rounded-xl p-4 border border-emerald-200/80">
+              <p class="text-xs font-semibold text-slate-500">Redução de Energia (kWh)</p>
+              <p class="text-2xl font-extrabold text-emerald-700 mt-1">-29%</p>
+              <p class="text-[11px] text-slate-500 mt-1">Irrigação guiada por sensor + ANEEL</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 border border-emerald-200/80">
+              <p class="text-xs font-semibold text-slate-500">Ganho de Margem na Safra</p>
+              <p class="text-2xl font-extrabold text-emerald-700 mt-1">+34%</p>
+              <p class="text-[11px] text-slate-500 mt-1">Venda direta com cotação RPA</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 border border-emerald-200/80">
+              <p class="text-xs font-semibold text-slate-500">Acurácia Técnica Auditada</p>
+              <p class="text-2xl font-extrabold text-slate-900 mt-1">87%</p>
+              <p class="text-[11px] text-slate-500 mt-1">100% recusa fora da base oficial</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 border border-emerald-200/80">
+              <p class="text-xs font-semibold text-slate-500">Ocupação de Carga Rural</p>
+              <p class="text-2xl font-extrabold text-teal-700 mt-1">92%</p>
+              <p class="text-[11px] text-slate-500 mt-1">Menos desperdício e menos CO₂</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-amber-500 text-white font-extrabold text-lg flex items-center justify-center shrink-0">
+            ODS 2
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-900">Fome Zero e Agricultura Sustentável (Metas 2.3 e 2.4)</h4>
+            <p class="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
+              Aumenta a produtividade e a renda líquida do pequeno produtor por meio de assistência técnica digital gratuita, detecção precoce de pragas e escoamento direto para mercados locais e merenda escolar (PNAE).
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white font-extrabold text-lg flex items-center justify-center shrink-0">
+            ODS 13
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-900">Ação Contra a Mudança Global do Clima (Meta 13.1)</h4>
+            <p class="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
+              Adapta a pequena propriedade às variações climáticas otimizando o uso de água e energia elétrica na irrigação e reduzindo emissões de gases de efeito estufa por meio de rotas logísticas compartilhadas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- 6) VIABILIDADE FINANCEIRA & PRÓXIMO PASSO                             -->
+  <!-- ===================================================================== -->
+  <section id="viabilidade" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mb-12">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 mb-3">
+        Viabilidade & Próximo Passo
+      </span>
+      <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+        Sustentabilidade Financeira e Plano de Implantação
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-6">
+        <div class="space-y-4">
+          <h3 class="text-lg font-extrabold text-slate-900">Estrutura Financeira Enxuta (Operação Mensal)</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="border-b border-slate-200 text-xs font-bold uppercase text-slate-500">
+                  <th class="py-2.5">Componente Financeiro</th>
+                  <th class="py-2.5">Premissa Operacional</th>
+                  <th class="py-2.5 text-right">Valor</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="py-3 font-semibold text-slate-800">Infraestrutura Cloud & Observabilidade</td>
+                  <td class="py-3 text-xs text-slate-500">Containers, CI/CD e banco gerenciado</td>
+                  <td class="py-3 text-right font-semibold text-slate-800">R$ 1.800 / mês</td>
+                </tr>
+                <tr>
+                  <td class="py-3 font-semibold text-slate-800">Operação, Suporte & Kits IoT Piloto</td>
+                  <td class="py-3 text-xs text-slate-500">Manutenção de sensores e onboarding</td>
+                  <td class="py-3 text-right font-semibold text-slate-800">R$ 5.000 / mês</td>
+                </tr>
+                <tr class="bg-slate-50">
+                  <td class="py-3 font-bold text-slate-900">Custo Operacional Total</td>
+                  <td class="py-3 text-xs text-slate-500">Zero custo variável de API (LLM local)</td>
+                  <td class="py-3 text-right font-extrabold text-rose-600">R$ 6.800 / mês</td>
+                </tr>
+                <tr class="bg-emerald-50/70">
+                  <td class="py-3 font-bold text-emerald-900">Receita com 3 Contratos Ativos (Mês 4)</td>
+                  <td class="py-3 text-xs text-emerald-700">3 × R$ 2.500 + R$ 900 take-rate frete</td>
+                  <td class="py-3 text-right font-extrabold text-emerald-700">R$ 8.400 / mês</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 text-white rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-emerald-400">Ponto de Equilíbrio (Break-Even)</p>
+            <p class="text-sm font-semibold mt-0.5">Alcançado no <strong>4º mês</strong> com apenas 3 cooperativas/prefeituras parceiras.</p>
+          </div>
+          <span class="px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-extrabold shrink-0">
+            +R$ 1.600/mês Mês 4
+          </span>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 bg-gradient-to-br from-emerald-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col justify-between space-y-6">
+        <div class="space-y-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-400/20 text-emerald-300 border border-emerald-400/30">
+            Próximo Passo • Piloto em Campo
+          </span>
+          <h3 class="text-2xl font-extrabold leading-tight">
+            Validação de 90 dias com Cooperativa do Cinturão Verde (SP)
+          </h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Buscamos parceiros institucionais e fomento para implantar a primeira estação piloto assistida com <strong>50 produtores familiares</strong> e <strong>15 nós sensores IoT</strong>, medindo em campo a redução de kWh e o aumento da margem líquida.
+          </p>
+        </div>
+
+        <div class="space-y-3 pt-4 border-t border-white/10">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-300">Meta Piloto (90 dias)</span>
+            <span class="font-bold text-emerald-300">50 produtores • 1 cooperativa</span>
+          </div>
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-300">Escala Ano 1</span>
+            <span class="font-bold text-emerald-300">12 cooperativas/municípios (1.200 produtores)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- RODAPÉ                                                                -->
+  <!-- ===================================================================== -->
+  <footer class="bg-slate-950 text-slate-400 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+      <div class="flex items-center gap-2.5 text-white">
+        <div class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
+          <i data-lucide="sprout" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <span class="font-extrabold text-base">Agro<span class="text-emerald-400">Conecta</span></span>
+          <span class="text-slate-400 ml-2">• Global Solution CitizenTech (FIAP 4ES)</span>
+        </div>
+      </div>
+
+      <p class="text-slate-300 font-medium">
+        Equipe: <strong>Bernardo Rocha</strong> • <strong>Eric Rodrigues</strong> • <strong>Renato Izumi</strong>
+      </p>
+
+      <button type="button" onclick="openLGPDModal()" class="text-emerald-400 hover:underline font-semibold">
+        Política de Transparência LGPD
+      </button>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL POLÍTICA DE TRANSPARÊNCIA LGPD                                  -->
+  <!-- ===================================================================== -->
+  <div id="lgpd-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-5 relative">
+      <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-extrabold text-slate-900">Privacidade & LGPD (Lei nº 13.709/2018)</h3>
+            <p class="text-xs text-slate-500">Privacy by Design na Agricultura Familiar</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeLGPDModal()" class="p-2 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
+        <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80">
+          <h4 class="font-bold text-slate-900 uppercase mb-1">1. Redação Automática de PII</h4>
+          <p>CPF, telefone, e-mail e CEP são mascarados automaticamente antes de qualquer inferência de IA ou gravação de log.</p>
+        </div>
+        <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80">
+          <h4 class="font-bold text-slate-900 uppercase mb-1">2. Inferência Local e Camada Ouro Anonimizada</h4>
+          <p>O assistente roda localmente sem enviar dados pessoais a APIs externas, e os indicadores municipais usam dados agregados.</p>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button type="button" onclick="closeLGPDModal()" class="px-5 py-2 rounded-xl text-xs font-semibold text-white bg-slate-900 hover:bg-emerald-700">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- JAVASCRIPT FUNCIONAL DO MVP                                           -->
+  <!-- ===================================================================== -->
+  <script>
+    const rpaQuotesData = [
+      { product: 'Tomate Italiano (Cx 20kg)', category: 'Hortalicas', source: 'CEAGESP-SP', price: 'R$ 68,50', change: '+6,4%', positive: true, logistics: 'Alta demanda • Escoar hoje' },
+      { product: 'Alface Crespa (Engradado)', category: 'Hortalicas', source: 'CEAGESP-SP', price: 'R$ 24,00', change: '+3,1%', positive: true, logistics: 'Rota Cooperativa 05h30' },
+      { product: 'Batata Ágata (Sc 25kg)', category: 'Raizes', source: 'CONAB', price: 'R$ 82,00', change: '-1,8%', positive: false, logistics: 'Manter estoque 48h' },
+      { product: 'Mandioca de Mesa (Cx 23kg)', category: 'Raizes', source: 'CONAB / PNAE', price: 'R$ 46,90', change: '+4,8%', positive: true, logistics: 'Edital Prefeitura Aberto' },
+      { product: 'Brócolis Ninja (Dúzia)', category: 'Hortalicas', source: 'CEAGESP-SP', price: 'R$ 39,20', change: '+5,2%', positive: true, logistics: 'Alta demanda • Escoar hoje' },
+      { product: 'Feijão Carioca (Sc 60kg)', category: 'Raizes', source: 'CONAB', price: 'R$ 248,00', change: '+1,2%', positive: true, logistics: 'Venda direta cooperativa' }
+    ];
+
+    const bigDataRegions = {
+      cinturao: {
+        saving: '-29% kWh',
+        trad: '410',
+        agro: '291',
+        energyPct: '65%',
+        logisticsGain: '+38% Carga',
+        logisticsAgro: '92%',
+        logisticsPct: '92%',
+        advice: 'Consolidação de carga disponível amanhã às 05h30 via Cooperativa Regional (Rota SP-270). Economia de R$ 240,00 em frete e -18 kg de CO₂.'
+      },
+      vale: {
+        saving: '-33% kWh',
+        trad: '390',
+        agro: '261',
+        energyPct: '59%',
+        logisticsGain: '+41% Carga',
+        logisticsAgro: '89%',
+        logisticsPct: '89%',
+        advice: 'Janela ideal para escoamento de banana e palmito via caminhão compartilhado BR-116. Redução de 31% no custo logístico por caixa.'
+      },
+      mantiqueira: {
+        saving: '-26% kWh',
+        trad: '435',
+        agro: '322',
+        energyPct: '70%',
+        logisticsGain: '+34% Carga',
+        logisticsAgro: '90%',
+        logisticsPct: '90%',
+        advice: 'Irrigação noturna em horário fora de ponta reduz tarifa elétrica em 26%. Coleta refrigerada confirmada para quinta-feira às 06h00.'
+      }
+    };
+
+    const ragKnowledgeBase = [
+      {
+        keywords: ['energia', 'tarifa', 'irrigacao', 'irrigação', 'bomba', 'aneel', 'luz', 'desconto'],
+        answer: 'Sim. Conforme a Resolução Normativa ANEEL nº 1.000/2021, produtores rurais com atividade de irrigação e aquicultura têm direito a descontos tarifários horários específicos (entre 21h30 e 06h00), reduzindo o custo energético do bombeamento.',
+        score: '98,7%',
+        scoreNum: 98.7,
+        sourceTitle: 'Resolução Normativa ANEEL nº 1.000/2021 — Tarifa Irrigação Rural',
+        sourceExcerpt: '"A distribuidora deve conceder desconto na tarifa de energia elétrica aplicável ao consumo verificado no período reservado destinado à irrigação e aquicultura."'
+      },
+      {
+        keywords: ['leite', 'temperatura', 'conservacao', 'conservação', 'resfriamento', 'laticinio', 'mapa'],
+        answer: 'De acordo com a Instrução Normativa MAPA nº 76 e manuais da EMBRAPA Gado de Leite, o leite cru refrigerado deve ser resfriado a no máximo 4,0 °C em até 3 horas após a ordenha, mantendo-se nessa temperatura até a coleta.',
+        score: '97,9%',
+        scoreNum: 97.9,
+        sourceTitle: 'EMBRAPA Gado de Leite / MAPA — Instrução Normativa nº 76',
+        sourceExcerpt: '"A temperatura máxima de conservação do leite cru refrigerado na propriedade rural deve ser de 4,0 °C, atingida em até três horas após o término da ordenha."'
+      },
+      {
+        keywords: ['hidrico', 'hídrico', 'horticultura', 'agua', 'água', 'umidade', 'gotejamento', 'manejo'],
+        answer: 'Segundo a Circular Técnica nº 142 da EMBRAPA Hortaliças, o manejo hídrico guiado por sensores de umidade do solo aliado ao gotejamento reduz o consumo energético e hídrico em até 30%, além de prevenir doenças foliares.',
+        score: '98,2%',
+        scoreNum: 98.2,
+        sourceTitle: 'EMBRAPA Hortaliças — Circular Técnica nº 142 (Manejo Hídrico)',
+        sourceExcerpt: '"O controle da lâmina de água baseado na tensão de umidade do solo evita o bombeamento excessivo e eleva a eficiência produtiva na horticultura."'
+      }
+    ];
+
+    const leafSamplesData = {
+      requeima: {
+        title: 'Requeima (Phytophthora infestans)',
+        severity: 'Severidade: Alta • Ação Imediata',
+        severityClass: 'bg-rose-100 text-rose-800',
+        confidence: 'Confiança: 96,8%',
+        symptoms: 'Manchas encharcadas de coloração verde-escura a marrom-acinzentada nas bordas dos folíolos, com halo clorótico característico de alta umidade foliar.',
+        recommendation: 'Suspender irrigação por aspersão no período noturno, realizar poda sanitária das folhas afetadas e aplicar calda bordalesa conforme circular técnica da EMBRAPA.',
+        impact: 'Até 42% da safra',
+        crop: 'Tomateiro / Batata',
+        bboxLabel: 'Requeima 96.8%',
+        bboxColor: '#f43f5e',
+        spots: [
+          { cx: 145, cy: 110, r: 22, fill: '#451a03' },
+          { cx: 195, cy: 145, r: 18, fill: '#78350f' },
+          { cx: 130, cy: 155, r: 14, fill: '#451a03' }
+        ],
+        leafFill: '#15803d'
+      },
+      minadora: {
+        title: 'Minadora-das-folhas (Liriomyza spp.)',
+        severity: 'Severidade: Moderada • Monitorar',
+        severityClass: 'bg-amber-100 text-amber-800',
+        confidence: 'Confiança: 94,5%',
+        symptoms: 'Galerias esbranquiçadas e sinuosas (minas) no limbo foliar causadas pela alimentação das larvas entre as epidermes da folha.',
+        recommendation: 'Instalar armadilhas adesivas amarelas na bordadura do talhão para captura de adultos e preservar inimigos naturais, evitando inseticidas de amplo espectro.',
+        impact: 'Até 25% produtividade',
+        crop: 'Hortaliças / Tomate',
+        bboxLabel: 'Minadora 94.5%',
+        bboxColor: '#f59e0b',
+        spots: [],
+        tunnels: true,
+        leafFill: '#16a34a'
+      },
+      nitrogenio: {
+        title: 'Deficiência de Nitrogênio (Clorose)',
+        severity: 'Severidade: Moderada • Nutricional',
+        severityClass: 'bg-sky-100 text-sky-800',
+        confidence: 'Confiança: 95,2%',
+        symptoms: 'Amarelecimento uniforme (clorose) iniciando-se pelas folhas mais velhas da base da planta, com redução no vigor vegetativo.',
+        recommendation: 'Realizar adubação nitrogenada de cobertura parcelada (composto orgânico ou biofertilizante) e controlar a umidade do solo para evitar lixiviação.',
+        impact: '+18% vigor foliar',
+        crop: 'Milho / Hortaliças',
+        bboxLabel: 'Clorose N 95.2%',
+        bboxColor: '#38bdf8',
+        spots: [],
+        leafFill: '#eab308'
+      },
+      saudavel: {
+        title: 'Folha Saudável (Controle Fitossanitário)',
+        severity: 'Status: Saudável • Sem Intervenção',
+        severityClass: 'bg-emerald-100 text-emerald-800',
+        confidence: 'Confiança: 99,1%',
+        symptoms: 'Limbo foliar íntegro, coloração verde-esmeralda uniforme e ausência de lesões fúngicas, galerias ou clorose.',
+        recommendation: 'Manter o cronograma atual de eco-irrigação guiado pelos sensores IoT e continuar o monitoramento semanal preventivo.',
+        impact: '100% potencial',
+        crop: 'Cultura Monitorada',
+        bboxLabel: 'Saudável 99.1%',
+        bboxColor: '#10b981',
+        spots: [],
+        leafFill: '#10b981'
+      }
+    };
+
+    let currentRPAFilter = 'todos';
+    let currentLeafKey = 'requeima';
+    let showBoundingBox = true;
+    let customUploadedImageUrl = null;
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      const borderClass = type === 'success' ? 'border-emerald-500' : 'border-amber-500';
+      toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-900 border-l-4 ${borderClass} text-white shadow-xl text-xs sm:text-sm font-medium transition-all duration-300`;
+      toast.innerHTML = `<span class="w-2 h-2 rounded-full ${type === 'success' ? 'bg-emerald-400' : 'bg-amber-400'} shrink-0"></span><span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    }
+
+    function renderRPATable() {
+      const tbody = document.getElementById('rpa-table-body');
+      if (!tbody) return;
+      const filtered = currentRPAFilter === 'todos' ? rpaQuotesData : rpaQuotesData.filter(i => i.category === currentRPAFilter);
+      tbody.innerHTML = filtered.map(item => `
+        <tr class="hover:bg-slate-50/90 transition-colors">
+          <td class="py-3 px-4 sm:px-5 font-semibold text-slate-900">${item.product}</td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-700">${item.source}</span></td>
+          <td class="py-3 px-4 font-bold text-slate-900">${item.price}</td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full text-xs font-bold ${item.positive ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${item.change}</span></td>
+          <td class="py-3 px-4 sm:px-5 text-xs text-slate-600 font-medium">${item.logistics}</td>
+        </tr>
+      `).join('');
+    }
+
+    function filterRPATable(category, btnEl) {
+      currentRPAFilter = category;
+      document.querySelectorAll('.rpa-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'text-slate-900', 'shadow-sm');
+        btn.classList.add('text-slate-600');
+      });
+      if (btnEl) {
+        btnEl.classList.add('bg-white', 'text-slate-900', 'shadow-sm');
+        btnEl.classList.remove('text-slate-600');
+      }
+      renderRPATable();
+    }
+
+    function simulateRPACollection() {
+      const icon = document.getElementById('rpa-icon');
+      const timestamp = document.getElementById('rpa-timestamp');
+      if (icon) icon.classList.add('animate-spin');
+      showToast('Robôs RPA consultando portais CEAGESP e CONAB...');
+      setTimeout(() => {
+        if (icon) icon.classList.remove('animate-spin');
+        const now = new Date();
+        if (timestamp) timestamp.textContent = `Hoje, ${now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })} (Ao vivo)`;
+        rpaQuotesData[0].price = 'R$ 69,20';
+        rpaQuotesData[0].change = '+7,1%';
+        renderRPATable();
+        showToast('Cotações atualizadas na camada Ouro!');
+      }, 800);
+    }
+
+    function updateBigDataChart() {
+      const selector = document.getElementById('region-selector');
+      if (!selector) return;
+      const data = bigDataRegions[selector.value] || bigDataRegions.cinturao;
+      document.getElementById('bd-energy-saving').textContent = data.saving;
+      document.getElementById('bd-energy-trad').textContent = data.trad;
+      document.getElementById('bd-energy-agro').textContent = data.agro;
+      document.getElementById('bd-energy-bar').style.width = data.energyPct;
+      document.getElementById('bd-logistics-gain').textContent = data.logisticsGain;
+      document.getElementById('bd-logistics-agro').textContent = data.logisticsAgro;
+      document.getElementById('bd-logistics-bar').style.width = data.logisticsPct;
+      document.getElementById('bd-route-advice').textContent = data.advice;
+    }
+
+    function simulateIoTScenario(mode) {
+      const soilVal = document.getElementById('iot-soil-val');
+      const soilBar = document.getElementById('iot-soil-bar');
+      const soilBadge = document.getElementById('iot-soil-badge');
+      const energyVal = document.getElementById('iot-energy-val');
+      const energyBar = document.getElementById('iot-energy-bar');
+      const energyBadge = document.getElementById('iot-energy-badge');
+      const tempVal = document.getElementById('iot-temp-val');
+      const tempBar = document.getElementById('iot-temp-bar');
+      const tempBadge = document.getElementById('iot-temp-badge');
+
+      if (mode === 'optimal') {
+        soilVal.textContent = '68%'; soilBar.style.width = '68%'; soilBadge.textContent = 'Ideal';
+        soilBadge.className = 'px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800';
+        energyVal.textContent = '1,4 kW'; energyBar.style.width = '42%'; energyBadge.textContent = '-31% kWh';
+        tempVal.textContent = '24,5 °C'; tempBar.style.width = '55%'; tempBadge.textContent = 'Estável';
+        showToast('Eco-Irrigação ativa: umidade ideal e menor consumo energético.');
+      } else if (mode === 'dry') {
+        soilVal.textContent = '34%'; soilBar.style.width = '34%'; soilBadge.textContent = 'Solo Seco';
+        soilBadge.className = 'px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800';
+        energyVal.textContent = '2,6 kW'; energyBar.style.width = '78%'; energyBadge.textContent = 'Bomba Ativa';
+        tempVal.textContent = '31,2 °C'; tempBar.style.width = '82%'; tempBadge.textContent = 'Elevada';
+        showToast('Alerta ESP32: solo seco detectado, gotejamento acionado.', 'warning');
+      } else if (mode === 'solar') {
+        soilVal.textContent = '72%'; soilBar.style.width = '72%'; soilBadge.textContent = 'Ótimo';
+        soilBadge.className = 'px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800';
+        energyVal.textContent = '0,2 kW'; energyBar.style.width = '12%'; energyBadge.textContent = '100% Solar';
+        tempVal.textContent = '27,8 °C'; tempBar.style.width = '66%'; tempBadge.textContent = 'Alta Radiação';
+        showToast('Bombeamento abastecido por geração solar fotovoltaica.');
+      }
+    }
+
+    function appendChatMessage(sender, text, isBlocked = false) {
+      const container = document.getElementById('rag-chat-messages');
+      if (!container) return;
+      const wrapper = document.createElement('div');
+      if (sender === 'user') {
+        wrapper.className = 'flex items-start justify-end gap-3';
+        wrapper.innerHTML = `<div class="bg-emerald-600 text-white rounded-2xl rounded-tr-none px-4 py-2.5 text-sm max-w-md shadow-sm">${text}</div>`;
+      } else {
+        const iconBg = isBlocked ? 'bg-amber-500' : 'bg-slate-900';
+        const boxStyle = isBlocked ? 'bg-amber-50 border border-amber-200 text-amber-950' : 'bg-slate-100 text-slate-800';
+        wrapper.className = 'flex items-start gap-3';
+        wrapper.innerHTML = `
+          <div class="w-8 h-8 rounded-lg ${iconBg} text-white flex items-center justify-center shrink-0 mt-0.5">
+            <i data-lucide="${isBlocked ? 'shield-alert' : 'bot'}" class="w-4 h-4"></i>
+          </div>
+          <div class="${boxStyle} rounded-2xl rounded-tl-none p-3.5 text-sm max-w-xl leading-relaxed">${text}</div>
+        `;
+      }
+      container.appendChild(wrapper);
+      container.scrollTop = container.scrollHeight;
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function askRAGQuestion(questionText) {
+      const cpfRegex = /\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/g;
+      const phoneRegex = /\(?\b\d{2}\)?\s?\d{4,5}-?\d{4}\b/g;
+      const hasCPF = cpfRegex.test(questionText);
+      const hasPhone = phoneRegex.test(questionText);
+
+      const sanitizedText = questionText
+        .replace(cpfRegex, '[CPF REMOVIDO]')
+        .replace(phoneRegex, '[TELEFONE REMOVIDO]');
+
+      const lgpdBanner = document.getElementById('rag-lgpd-banner');
+      const lgpdDetails = document.getElementById('rag-lgpd-details');
+
+      if (hasCPF || hasPhone) {
+        const items = [hasCPF ? 'CPF' : null, hasPhone ? 'Telefone' : null].filter(Boolean).join(' e ');
+        if (lgpdBanner && lgpdDetails) {
+          lgpdDetails.textContent = `${items} detectado(s) e mascarado(s) antes do processamento e dos logs.`;
+          lgpdBanner.classList.remove('hidden');
+        }
+        showToast(`[LGPD] ${items} removido(s) automaticamente.`);
+      } else if (lgpdBanner) {
+        lgpdBanner.classList.add('hidden');
+      }
+
+      const normalized = sanitizedText.toLowerCase();
+      appendChatMessage('user', sanitizedText);
+
+      const matched = ragKnowledgeBase.find(entry => entry.keywords.some(kw => normalized.includes(kw)));
+      const scoreValueEl = document.getElementById('rag-score-value');
+      const scoreBarEl = document.getElementById('rag-score-bar');
+      const statusPillEl = document.getElementById('rag-status-pill');
+      const sourceTitleEl = document.getElementById('rag-source-title');
+      const sourceExcerptEl = document.getElementById('rag-source-excerpt');
+
+      setTimeout(() => {
+        if (matched) {
+          appendChatMessage('bot', matched.answer, false);
+          scoreValueEl.textContent = matched.score;
+          scoreValueEl.className = 'text-2xl font-extrabold text-emerald-600';
+          scoreBarEl.style.width = `${matched.scoreNum}%`;
+          scoreBarEl.className = 'bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-full transition-all duration-500';
+          statusPillEl.textContent = 'Verificado';
+          statusPillEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800';
+          sourceTitleEl.textContent = matched.sourceTitle;
+          sourceExcerptEl.textContent = matched.sourceExcerpt;
+        } else {
+          appendChatMessage('bot', '<strong>Não consta na base oficial:</strong> Esta consulta está fora das resoluções da ANEEL e manuais da EMBRAPA indexados. O modelo gerador não foi acionado.', true);
+          scoreValueEl.textContent = '14,0%';
+          scoreValueEl.className = 'text-2xl font-extrabold text-amber-600';
+          scoreBarEl.style.width = '14%';
+          scoreBarEl.className = 'bg-amber-500 h-full rounded-full transition-all duration-500';
+          statusPillEl.textContent = 'Bloqueado (< 85%)';
+          statusPillEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800';
+          sourceTitleEl.textContent = 'Nenhum documento oficial compatível';
+          sourceExcerptEl.textContent = 'Similaridade abaixo do limiar de segurança de 85,0%.';
+        }
+      }, 280);
+    }
+
+    function renderLeafViewport() {
+      const sample = leafSamplesData[currentLeafKey] || leafSamplesData.requeima;
+      const container = document.getElementById('leaf-svg-container');
+      if (!container) return;
+
+      document.getElementById('cv-title').textContent = sample.title;
+      const severityEl = document.getElementById('cv-severity-badge');
+      severityEl.textContent = sample.severity;
+      severityEl.className = `px-3 py-1 rounded-full text-xs font-bold ${sample.severityClass}`;
+      document.getElementById('cv-symptoms').textContent = sample.symptoms;
+      document.getElementById('cv-recommendation').textContent = sample.recommendation;
+      document.getElementById('cv-impact').textContent = sample.impact;
+      document.getElementById('cv-crop').textContent = sample.crop;
+      document.getElementById('cv-confidence-hud').textContent = sample.confidence;
+
+      if (customUploadedImageUrl) {
+        container.innerHTML = `
+          <img src="${customUploadedImageUrl}" alt="Amostra enviada" class="w-full h-full object-contain rounded-lg" />
+          ${showBoundingBox ? `
+            <div class="absolute inset-8 border-2 border-dashed border-emerald-400 rounded-xl pointer-events-none flex items-start justify-start p-2">
+              <span class="bg-emerald-400 text-slate-950 font-mono text-[11px] font-bold px-2 py-0.5 rounded">Análise Foliar 95.4%</span>
+            </div>
+          ` : ''}
+        `;
+        return;
+      }
+
+      const spotsMarkup = (sample.spots || []).map(s => `
+        <circle cx="${s.cx}" cy="${s.cy}" r="${s.r}" fill="${s.fill}" opacity="0.88" />
+        <circle cx="${s.cx}" cy="${s.cy}" r="${s.r + 5}" fill="none" stroke="#facc15" stroke-width="1.5" opacity="0.55" />
+      `).join('');
+
+      const tunnelsMarkup = sample.tunnels ? `
+        <path d="M125 115 Q150 95 175 118 T210 140 Q175 162 145 148" fill="none" stroke="#fef9c3" stroke-width="4" stroke-linecap="round" opacity="0.9" />
+        <path d="M135 135 Q165 125 188 152" fill="none" stroke="#fef08a" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+      ` : '';
+
+      const bboxMarkup = showBoundingBox ? `
+        <g>
+          <rect x="92" y="64" width="156" height="132" rx="8" fill="none" stroke="${sample.bboxColor}" stroke-width="2.5" stroke-dasharray="6 3" />
+          <rect x="92" y="42" width="128" height="22" rx="5" fill="${sample.bboxColor}" />
+          <text x="100" y="57" fill="#0f172a" font-family="monospace" font-size="11" font-weight="bold">${sample.bboxLabel}</text>
+        </g>
+      ` : '';
+
+      container.innerHTML = `
+        <svg viewBox="0 0 340 240" class="w-full h-full max-h-60">
+          <g stroke="#1e293b" stroke-width="1">
+            <line x1="0" y1="60" x2="340" y2="60" /><line x1="0" y1="120" x2="340" y2="120" /><line x1="0" y1="180" x2="340" y2="180" />
+            <line x1="85" y1="0" x2="85" y2="240" /><line x1="170" y1="0" x2="170" y2="240" /><line x1="255" y1="0" x2="255" y2="240" />
+          </g>
+          <path d="M82 178 Q102 162 118 150" stroke="#166534" stroke-width="5" stroke-linecap="round" fill="none" />
+          <path d="M115 152 C110 95, 175 68, 236 86 C242 145, 192 192, 115 152 Z" fill="${sample.leafFill}" stroke="#052e16" stroke-width="2" />
+          <path d="M116 151 Q175 120 234 87" stroke="#dcfce7" stroke-width="2" opacity="0.45" fill="none" />
+          <path d="M148 135 L145 102 M175 120 L172 86 M198 106 L212 126 M165 126 L185 154" stroke="#dcfce7" stroke-width="1.4" opacity="0.35" fill="none" />
+          ${spotsMarkup}
+          ${tunnelsMarkup}
+          ${bboxMarkup}
+        </svg>
+      `;
+    }
+
+    function selectLeafSample(sampleKey) {
+      customUploadedImageUrl = null;
+      currentLeafKey = sampleKey;
+      document.querySelectorAll('.leaf-sample-btn').forEach(btn => {
+        btn.classList.remove('border-2', 'border-emerald-600', 'bg-emerald-50', 'text-emerald-900', 'font-bold');
+        btn.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-700', 'font-semibold');
+      });
+      const activeBtn = document.getElementById(`btn-sample-${sampleKey}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('border', 'border-slate-200', 'bg-white', 'text-slate-700', 'font-semibold');
+        activeBtn.classList.add('border-2', 'border-emerald-600', 'bg-emerald-50', 'text-emerald-900', 'font-bold');
+      }
+      renderLeafViewport();
+    }
+
+    function handleCustomLeafUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        customUploadedImageUrl = e.target.result;
+        renderLeafViewport();
+        showToast(`Imagem "${file.name}" processada pelo modelo YOLOv8-AgroEdge!`);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function toggleBoundingBox() {
+      showBoundingBox = !showBoundingBox;
+      const btn = document.getElementById('toggle-bbox-btn');
+      if (btn) btn.textContent = showBoundingBox ? 'Ocultar Bounding Box' : 'Exibir Bounding Box';
+      renderLeafViewport();
+    }
+
+    function openLGPDModal() {
+      const modal = document.getElementById('lgpd-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeLGPDModal() {
+      const modal = document.getElementById('lgpd-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        if (window.lucide) lucide.createIcons();
+        renderRPATable();
+        renderLeafViewport();
+
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+          mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+          document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+          });
+        }
+
+        const btnRunRPA = document.getElementById('btn-run-rpa');
+        if (btnRunRPA) btnRunRPA.addEventListener('click', simulateRPACollection);
+
+        const ragForm = document.getElementById('rag-form');
+        const ragInput = document.getElementById('rag-input');
+        if (ragForm && ragInput) {
+          ragForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = ragInput.value.trim();
+            if (!val) return;
+            ragInput.value = '';
+            askRAGQuestion(val);
+          });
+        }
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') closeLGPDModal();
+        });
+      } catch (err) {
+        console.error('Erro na inicialização:', err);
+      }
+    });
+  </script>
+</body>
+</html>
