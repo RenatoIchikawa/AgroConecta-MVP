@@ -73,6 +73,12 @@ A interface web foi construída como uma aplicação **Single-File** responsiva,
 
 ## 🚀 Como Executar o Projeto
 
+## Opção 1: Acesso Direto Online (Recomendado)
+
+A plataforma está publicada e acessível diretamente pelo navegador, sem necessidade de instalação:
+
+URL Pública: https://renatoichikawa.github.io/AgroConecta-MVP/
+
 ### Pré-requisitos
 Nenhum servidor complexo ou instalação de dependências (`Node.js` ou `npm`) é obrigatória para executar a aplicação web. Você precisa apenas de:
 * Um navegador web moderno (**Google Chrome**, **Microsoft Edge**, **Firefox** ou **Safari**).
