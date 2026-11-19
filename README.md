@@ -9,6 +9,16 @@
 
 ---
 
+## Integrantes
+
+| Nome completo | RM |
+|---|---|
+| Eric de Carvalho Rodrigues | RM550249 |
+| Renato Izumi Ichikawa | RM99242 |
+| Bernardo Pinto Rocha | RM99209 |
+
+---
+
 ## 📋 Sobre o Projeto
 
 O **AgroConecta** é uma plataforma **AgriTech e GovTech** desenvolvida na **FIAP** para solucionar os principais gargalos operacionais da agricultura familiar brasileira:
@@ -113,13 +123,6 @@ AgroConecta/
 
 ---
 
-## 👥 Equipe Desenvolvedora — FIAP
-
-* **Bernardo Rocha**
-* **Eric Rodrigues**
-* **Renato Izumi**
-
----
 
 ## 📄 Licença e Governança
 
