@@ -79,6 +79,8 @@ A plataforma está publicada e acessível diretamente pelo navegador, sem necess
 
 URL Pública: https://renatoichikawa.github.io/AgroConecta-MVP/
 
+## Opção 2: Executar Localmente no Computador
+
 ### Pré-requisitos
 Nenhum servidor complexo ou instalação de dependências (`Node.js` ou `npm`) é obrigatória para executar a aplicação web. Você precisa apenas de:
 * Um navegador web moderno (**Google Chrome**, **Microsoft Edge**, **Firefox** ou **Safari**).
